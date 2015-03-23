@@ -47,7 +47,7 @@ public class DB {
 				System.out.println("Sorry, can't connect to the database");
 			}
 			db_connection = true;
-			System.out.println("Connexion � la base de donn�es �tablie.");
+			System.out.println("Connexion à la base de données établie.");
 		}
 		catch(ClassNotFoundException e)
 		{
@@ -73,7 +73,7 @@ public class DB {
 			if(this.conn != null && !this.conn.isClosed())
 			{
 				this.conn.close();
-				System.out.println("Connexion � la base de donn�es ferm�e.");
+				System.out.println("Connexion à la base de données fermée.");
 			}
 		}
 		catch(Exception e)
@@ -84,19 +84,19 @@ public class DB {
 	
 	/***
 	 * 
-	 * @param sql : requ�te sql de r�cup�ration des donn�es
-	 * @return R�sultat de la requ�te
+	 * @param sql : requête sql de récupération des données
+	 * @return Résultat de la requête
 	 */
-	public Object[] getResultSelect(String sql)
+	public Object[][] getResultSelect(String sql)
 	{
-		Object result[] = null;
+		Object result[][] = null;
 		
 		try{
 			this.connection();
 			Statement statement;
 			ResultSet rs;
 			
-			if(db_connection == true) // Si la connexion � la base de donn�es a bien �t� effectu�e
+			if(db_connection == true) // Si la connexion à la base de données a bien été effectuée
 			{
 				statement = this.conn.createStatement();
 				rs = statement.executeQuery(sql);
@@ -115,13 +115,16 @@ public class DB {
 						int numberColonnes = rsmd.getColumnCount();
 						
 						//S'il y a bp de ligne, on obtient la premiere ligne
-						result = new Object[numberColonnes];
+						result = new Object[numberRows][];
 						
 						rs.first();
-						
-						for(int iBoucle=0; iBoucle<numberColonnes; iBoucle++)
-						{
-							result[iBoucle] = rs.getObject(iBoucle+1);
+						for(int iRow=0; iRow< numberRows; iRow++){
+							result[iRow] = new Object[numberColonnes];
+							for(int iColumn=0; iColumn<numberColonnes; iColumn++)
+							{
+								result[iRow][iColumn] = rs.getObject(iColumn+1);
+							}
+							rs.next();
 						}
 						rs.close();
 					}
@@ -130,11 +133,11 @@ public class DB {
 		}
 		catch(Exception e)
 		{
-			System.out.println("> Exception < Erreur de r�cup�ration des donn�es (informations non pr�sentes dans la db)");
-			System.out.println("> Exception < D�commenter la ligne de catch de la fonction \"getResultSelect()\" dans le fichier \"DB.java\" pour plus d'informations");
+			System.out.println("> Exception < Erreur de récupération des données (informations non présentes dans la db)");
+			System.out.println("> Exception < Décommenter la ligne de catch de la fonction \"getResultSelect()\" dans le fichier \"DB.java\" pour plus d'informations");
 			//e.printStackTrace();
 		}
-		//Fermeture de la connexion � la base de donn�es
+		//Fermeture de la connexion à la base de données
 		this.closeConnection();
 		return result;
 	}
