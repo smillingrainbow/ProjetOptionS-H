@@ -2,13 +2,17 @@
 #include "ui_childview.h"
 
 ChildView::ChildView(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ChildView)
+    QWidget(parent)
 {
-    ui->setupUi(this);
+    QHBoxLayout *hbox = new QHBoxLayout();
+    childColumnView = new QColumnView();
+    descriptionText = new QTextEdit();
+
+    hbox->addWidget(childColumnView);
+    hbox->addWidget(descriptionText);
+
 }
 
 ChildView::~ChildView()
 {
-    delete ui;
 }

@@ -19,5 +19,4 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     childview.h
 
-FORMS    += mainwindow.ui \
-    childview.ui
+FORMS    += mainwindow.ui

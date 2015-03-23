@@ -2,10 +2,9 @@
 #define CHILDVIEW_H
 
 #include <QWidget>
-
-namespace Ui {
-class ChildView;
-}
+#include <QColumnView>
+#include <QLayout>
+#include <QTextEdit>
 
 class ChildView : public QWidget
 {
@@ -16,7 +15,8 @@ public:
     ~ChildView();
 
 private:
-    Ui::ChildView *ui;
+    QColumnView *childColumnView;
+    QTextEdit *descriptionText;
 };
 
 #endif // CHILDVIEW_H
