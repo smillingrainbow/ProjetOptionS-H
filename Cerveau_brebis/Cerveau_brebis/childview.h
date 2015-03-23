@@ -15,7 +15,13 @@ public:
     ~ChildView();
 
 private:
+    /**
+     * @brief Widget permettant de lister au fur et à mesure les enfants de l'objet selectionné dans la colonne précédente
+     */
     QColumnView *childColumnView;
+    /**
+     * @brief Description de l'objet sélectionné
+     */
     QTextEdit *descriptionText;
 };
 
