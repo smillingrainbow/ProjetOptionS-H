@@ -1,6 +1,8 @@
 import com.sun.j3d.utils.geometry.ColorCube;
 
-
+/***
+ * Création et sélection d'un cube avec ses informations
+ */
 public class ReColorCube extends ColorCube{
 	
 	private String nomCube="";
@@ -18,9 +20,12 @@ public class ReColorCube extends ColorCube{
 		this.Y = var_Y;
 		this.Z = var_Z;
 		
-		this.info = new Info(Integer.parseInt(nomCube));
 	}
 	
+	/***
+	 * Getter des coordonnées du cube
+	 * @return Tableau des variables x, y et z
+	 */
 	public float[] getXYZ()
 	{
 		float xyz[] =  new float[3];
@@ -31,13 +36,24 @@ public class ReColorCube extends ColorCube{
 		return xyz;
 	}
 	
+	/***
+	 * Getter du nom du cube
+	 * @return
+	 */
 	public String getNomCube()
 	{
 		return this.nomCube;
 	}
 	
+	/***
+	 * Getter des informations du cube
+	 * @return
+	 */
 	public Info getInfo()
 	{
+
+		this.info = new Info(Integer.parseInt(nomCube));
+		
 		return this.info;
 	}
 }

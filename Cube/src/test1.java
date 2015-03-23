@@ -56,10 +56,10 @@ public class test1 extends Applet{
 	float tailleCube = 0.1f;
 	
 	//Si c'est la premiere fois pour choisir un cube
-	private boolean first = true;
+	private boolean first_cube = true;
 	
 	//Le tableau de ReColorCube
-	public ReColorCube rcc[] = new ReColorCube[numberLineCube*numberLineCube*numberLineCube];
+	public ReColorCube tab_color_cube[] = new ReColorCube[numberLineCube*numberLineCube*numberLineCube];
 	
 	//Le tableau de TransformGroup
 	public TransformGroup objRotate[] = new TransformGroup[numberLineCube*numberLineCube*numberLineCube];
@@ -68,22 +68,20 @@ public class test1 extends Applet{
 	
 	public test1(){}
 	
-	
+	/***
+	 * Création de la scène - Tous les cubes
+	 * @return BranchGroup
+	 */
 	public BranchGroup createSceneGraph()
 	{
 		
-		int noRCC = 0;
+		int notab_color_cube = 0;
 		
 		BranchGroup objRoot = new BranchGroup();
 		
-		//objRoot = new BranchGroup();
-		
-		
-		
-		
-		for(float Z=(-MoinsCenter); Z<numberLineCube-MoinsCenter; Z=Z+1)
-			for(float Y=(-MoinsCenter); Y<numberLineCube-MoinsCenter; Y=Y+1)
-				for(float X=(-MoinsCenter); X<numberLineCube-MoinsCenter; X=X+1)
+		for(float Z=(-MoinsCenter); Z<numberLineCube-MoinsCenter; Z++)
+			for(float Y=(-MoinsCenter); Y<numberLineCube-MoinsCenter; Y++)
+				for(float X=(-MoinsCenter); X<numberLineCube-MoinsCenter; X++)
 				{
 					Transform3D rotate = new Transform3D();
 					
@@ -91,16 +89,16 @@ public class test1 extends Applet{
 					 
 					rotate.setTranslation(v3f); //translation
 					
-					objRotate[noRCC] = new TransformGroup(rotate);
-					objRotate[noRCC].setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
-					objRotate[noRCC].setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+					objRotate[notab_color_cube] = new TransformGroup(rotate);
+					objRotate[notab_color_cube].setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+					objRotate[notab_color_cube].setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 					
 					
 					//On peut utiliser le souris pour tourner le cube
 					//Mais, au début, on ne peut pas les tourner. Car, on n'utilise pas encore la fonction setSchedulingBounds
 					MouseRotate behavior = new MouseRotate();					
-				    behavior.setTransformGroup(objRotate[noRCC]);
-				    objRotate[noRCC].addChild(behavior);
+				    behavior.setTransformGroup(objRotate[notab_color_cube]);
+				    objRotate[notab_color_cube].addChild(behavior);
 				  
 				    //
 				    ModelClip mc = new ModelClip();
@@ -113,17 +111,17 @@ public class test1 extends Applet{
 				    mc.setCapability(ModelClip.ALLOW_INFLUENCING_BOUNDS_WRITE);
 				    mc.setCapability(ModelClip.ALLOW_SCOPE_READ);
 				    mc.setCapability(ModelClip.ALLOW_SCOPE_WRITE);
-				    objRotate[noRCC].addChild(mc);
+				    objRotate[notab_color_cube].addChild(mc);
 					
-					rcc[noRCC] = new ReColorCube(tailleCube, (noRCC+1)+"", X, Y, Z);
+					tab_color_cube[notab_color_cube] = new ReColorCube(tailleCube, Integer.toString((notab_color_cube+1)), X, Y, Z);
 					
 					//ajoute ReColorCube au tableau TransformGroup
-					objRotate[noRCC].addChild(rcc[noRCC]);
+					objRotate[notab_color_cube].addChild(tab_color_cube[notab_color_cube]);
 					
 					//ajouter TransformGroup a BranchGroup
-					objRoot.addChild(objRotate[noRCC]);
+					objRoot.addChild(objRotate[notab_color_cube]);
 		
-					noRCC++;
+					notab_color_cube++;
 				}
 
 		
@@ -134,43 +132,46 @@ public class test1 extends Applet{
 	{
 		setLayout(new BorderLayout());
 		
+		/** Panel droit **/
+		
 		JPanel panelEast = new JPanel();
 		panelEast.setSize(100, 100);
 		panelEast.setLayout(new GridLayout(8,1));
-		
 		
 		String nom[] = new String[numberLineCube*numberLineCube*numberLineCube];
 		
 		for(int iBoucle=0; iBoucle<numberLineCube*numberLineCube*numberLineCube; iBoucle++)
 		{
-			nom[iBoucle] = (iBoucle+1)+"";
+			nom[iBoucle] = Integer.toString(iBoucle+1);
 		}
 		
-		//Creer un JComboBox pour que les utilisateurs peuvent choisir un cube selon le nom de cube
-		JComboBox jcb = new JComboBox(nom);
-		
-		
-		panelEast.add(jcb);
+		//Creer un JComboBox pour que les utilisateurs puissent choisir un cube selon l'id
+		final JComboBox cb_choix_cube = new JComboBox(nom);
+		cb_choix_cube.insertItemAt("Sélectionner numéro de cube", 0);
+		cb_choix_cube.setSelectedIndex(0);
+		panelEast.add(cb_choix_cube);
 		
 		//Creer JRadioButton pour choisir le plan
 		ButtonGroup jbg = new ButtonGroup();
-		JRadioButton jrbX = new JRadioButton("X");
-		JRadioButton jrbY = new JRadioButton("Y");
-		JRadioButton jrbZ = new JRadioButton("Z");
+		JRadioButton btn_x = new JRadioButton("X");
+		JRadioButton btn_y = new JRadioButton("Y");
+		JRadioButton btn_z = new JRadioButton("Z");
 		
-		jbg.add(jrbX);
-		jbg.add(jrbY);
-		jbg.add(jrbZ);
+		jbg.add(btn_x);
+		jbg.add(btn_y);
+		jbg.add(btn_z);
 		
 		JPanel panelRadioButton = new JPanel();
 		
-		panelRadioButton.add(jrbX);
-		panelRadioButton.add(jrbY);
-		panelRadioButton.add(jrbZ);
+		panelRadioButton.add(btn_x);
+		panelRadioButton.add(btn_y);
+		panelRadioButton.add(btn_z);
 		
 		panelEast.add(panelRadioButton);
 		
 		add("East", panelEast);
+		
+		/** Panel bas **/
 		
 		//Creer un panel pour afficher les info correspondant à un cube
 		JPanel panelSouth = new JPanel();
@@ -195,6 +196,8 @@ public class test1 extends Applet{
 		
 		add("South", panelSouth);
 		
+		/** Canvas central **/
+		
 		final BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0), 10.0f);
 		
 		//Creer Universe de 3D
@@ -207,41 +210,42 @@ public class test1 extends Applet{
 		
 		scene.compile();
 		
-		SimpleUniverse u = new SimpleUniverse(canvas3D); //creer une universe
+		SimpleUniverse u = new SimpleUniverse(canvas3D); //creer un universe
 		
 		u.getViewingPlatform().setNominalViewingTransform();
 		
 		u.addBranchGraph(scene);
 		
 		
+		/** Evènements JComboBox **/
 		
-		//evenement de JCOMBOBOX
-		jcb.addItemListener(new ItemListener(){
+		// Sélection d'un cube dans la liste
+		cb_choix_cube.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e)
 			{
-				//Quand le choix change
+				//Si le choix de cube change
 				if(e.getStateChange() == ItemEvent.SELECTED)
 				{
-					int IdNom = Integer.parseInt((String)e.getItem());
+					// Retirer de la liste l'item par défaut
+					cb_choix_cube.removeItemAt(0);
+					
+					// Marche car le nom affiché est un numéro
+					int IdNom = Integer.parseInt(e.getItem().toString());
 					
 					//Afficher les infos correspondant au cube
-					Info info = rcc[IdNom-1].getInfo();
-					textIdStructure.setText(info.getIdStructure()+"");
+					Info info = tab_color_cube[IdNom-1].getInfo();
+					textIdStructure.setText(Integer.toString(info.getIdStructure()));
 					textNom.setText(info.getNom());
 					textDescription.setText(info.getDescription());
 					
-					
-					
-					float coordonnee[] = rcc[IdNom-1].getXYZ();
+					float coordonnee[] = tab_color_cube[IdNom-1].getXYZ();
 										
-					Transform3D rotate = new Transform3D();
-					
-					//float ecart = 3;					
+					Transform3D rotate = new Transform3D();				
 					
 					Vector3f v3f;
 					int timeChange = 50; //La periode pour changer le point centre (ms)
 					//La premiere fois, il ne suffit pas de mettre le cube en position originale, parce qu'il n'y a aucun cube au debut
-					if(first == true)
+					if(first_cube == true)
 					{   //Les coordonnees du cube precedent
 						Xpre = coordonnee[0];
 						Ypre = coordonnee[1];
@@ -269,23 +273,20 @@ public class test1 extends Applet{
 							}
 						}
 						
-						
-						
 						//Configurer ce cube pour le faire tourner
-						//BoundingSphere bounds = new BoundingSphere(new Point3d(0.25f*coordonnee[0],0.25f*coordonnee[1],0.25f*coordonnee[2]), 10.0f);
 						MouseRotate mr =  (MouseRotate)objRotate[IdNom-1].getChild(0);
 						mr.setSchedulingBounds(bounds);												
 						
-						//Apres la premiere fois, on affect FALSE a la variable 'first'
-						first = false;
+						//Apres la premiere fois, on affect FALSE a la variable 'first_cube'
+						first_cube = false;
 					}
 					else
-					{
+					{ // Si ce n'est pas la première fois qu'un cube est sélectionné
 						v3f = new Vector3f(0.25f*Xpre, 0.25f*Ypre, 0.25f*Zpre);
 						rotate.setTranslation(v3f);
 						objRotate[NomPre-1].setTransform(rotate);
 						
-						//Configurer le cube precedent pour le faire ne pas tourner
+						//Configurer le cube precedent pour qu'il ne tourne plus
 						MouseRotate mr =  (MouseRotate)objRotate[NomPre-1].getChild(0);
 						mr.setSchedulingBounds(null);
 						
@@ -319,10 +320,7 @@ public class test1 extends Applet{
 							}
 						}
 						
-						//System.out.println(0.25f*(coordonnee[0]-fBoucle)+"");
-						
-						//Configurer ce cube pour le faire tourner
-						//BoundingSphere bounds = new BoundingSphere(new Point3d(0.25f*coordonnee[0],0.25f*coordonnee[1],0.25f*coordonnee[2]), 10.0f);
+						//Configurer le nouveau cube à faire tourner
 						mr =  (MouseRotate)objRotate[IdNom-1].getChild(0);
 						mr.setSchedulingBounds(bounds);
 					}
@@ -330,75 +328,59 @@ public class test1 extends Applet{
 			}
 		});
 		
-		//Click sur X
-		jrbX.addActionListener(new ActionListener(){
+		// Choix de l'axe X
+		btn_x.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
+				// Si ce un cube a déjà été choisi
 				if(NomPre != 0)
 				{
-					float coordonnee[] = rcc[NomPre-1].getXYZ();
+					float coordonnee[] = tab_color_cube[NomPre-1].getXYZ();
 					
-					Vector4d v4d = new Vector4d(-1.0, 0.0, 0.0, -0.25*ecart);
-					//Vector4d v4d2 = new Vector4d(-1.0, 0.0, 0.0, -0.25*ecart-0.05);
+					Vector4d v4d = new Vector4d(-1.0, 0.0, 0.0, -0.25*coordonnee[1]);
 					
 					ModelClip mcTemp = (ModelClip)objRotate[NomPre-1].getChild(1);
-					//BoundingSphere bounds = new BoundingSphere(new Point3d(-0.25f*ecart,0.25f*coordonnee[1],0.25f*coordonnee[2]), 10.0f);
-					
-					//BoundingBox bounds = new BoundingBox(new Point3d(-0.85,0.25f*coordonnee[1]-0.1f,0.25f*coordonnee[2]-0.1f), new Point3d(-0.65,0.25f*coordonnee[1]+0.1f,0.25f*coordonnee[2]+0.1f));	
 					
 					mcTemp.setPlane(0, v4d);
-					//mcTemp.setPlane(1, v4d2);
 					mcTemp.setEnable(0, true);
-					//mcTemp.setEnable(1, true);
 					mcTemp.setInfluencingBounds(bounds);
 				}
 			}
 		});
 		
-		//CLick sur Y
-
-		jrbY.addActionListener(new ActionListener(){
+		// Choix de l'axe Y
+		btn_y.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
 				if(NomPre != 0)
 				{
-					float coordonnee[] = rcc[NomPre-1].getXYZ();
+					float coordonnee[] = tab_color_cube[NomPre-1].getXYZ();
 					
 					Vector4d v4d = new Vector4d(0.0, -1.0, 0.0, 0.25*coordonnee[1]);
-					///Vector4d v4d = new Vector4d(0.0, 1.0, 0.0, -0.25*coordonnee[1]);
-					System.out.println(0.25*coordonnee[1]);
-					//Vector4d v4d2 = new Vector4d(1.0, 0.0, 0.0, 0.25*MoinsCenter+tailleCube);
-					Vector4d v4d2 = new Vector4d(1.0, 0.0, 0.0, -0.15);
+					System.out.println("Choix de l'axe Y - 4e var v4d = "+0.25*coordonnee[1]);
 					
 					ModelClip mcTemp = (ModelClip)objRotate[NomPre-1].getChild(1);
-					//BoundingSphere bounds = new BoundingSphere(new Point3d(-0.25f*ecart,0.25f*coordonnee[1],0.25f*coordonnee[2]), 10.0f);
-					
-					//BoundingBox bounds = new BoundingBox(new Point3d(-0.85,0.25f*coordonnee[1]-0.1f,0.25f*coordonnee[2]-0.1f), new Point3d(-0.65,0.25f*coordonnee[1]+0.1f,0.25f*coordonnee[2]+0.1f));	
 					
 					mcTemp.setPlane(1, v4d);
 					mcTemp.setEnable(1, true);
-					//mcTemp.setPlane(0, v4d2);
-					//mcTemp.setEnable(0, true);
 					
 					mcTemp.setInfluencingBounds(bounds);
 				}
 			}
 		});
 		
-		//Click sur Z
-		jrbZ.addActionListener(new ActionListener(){
+		// Choix de l'axe Z
+		btn_z.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
 				if(NomPre != 0)
 				{
-					float coordonnee[] = rcc[NomPre-1].getXYZ();
+					float coordonnee[] = tab_color_cube[NomPre-1].getXYZ();
 					
-					Vector4d v4d = new Vector4d(0.0, 0.0, 1.0, 0.25*coordonnee[2]);
+					Vector4d v4d = new Vector4d(0.0, 0.0, -1.0, 0.25*coordonnee[1]);
+					System.out.println("Choix de l'axe Z - 4e var v4d = "+0.25*coordonnee[1]);
 					
 					ModelClip mcTemp = (ModelClip)objRotate[NomPre-1].getChild(1);
-					//BoundingSphere bounds = new BoundingSphere(new Point3d(-0.25f*ecart,0.25f*coordonnee[1],0.25f*coordonnee[2]), 10.0f);
-					
-					//BoundingBox bounds = new BoundingBox(new Point3d(-0.85,0.25f*coordonnee[1]-0.1f,0.25f*coordonnee[2]-0.1f), new Point3d(-0.65,0.25f*coordonnee[1]+0.1f,0.25f*coordonnee[2]+0.1f));	
 					
 					mcTemp.setPlane(1, v4d);
 					mcTemp.setEnable(1, true);
@@ -411,8 +393,8 @@ public class test1 extends Applet{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
+		System.out.println("Lancement de l'application");
 		new MainFrame(new test1(), 1024, 1024);
 	}
 
