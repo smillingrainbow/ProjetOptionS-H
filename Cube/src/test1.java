@@ -52,7 +52,7 @@ public class test1 extends Applet{
 	//variable de Boucle pour la fonction createSceneGraph(). On l'utilise dans la fonction init() aussi
 	float MoinsCenter = 1;
 	
-	//La taille de cube, quand on crée un ReColorCube, c'est le premier argument
+	//La taille de cube, quand on crï¿½e un ReColorCube, c'est le premier argument
 	float tailleCube = 0.1f;
 	
 	//Si c'est la premiere fois pour choisir un cube
@@ -69,7 +69,7 @@ public class test1 extends Applet{
 	public test1(){}
 	
 	/***
-	 * Création de la scène - Tous les cubes
+	 * Crï¿½ation de la scï¿½ne - Tous les cubes
 	 * @return BranchGroup
 	 */
 	public BranchGroup createSceneGraph()
@@ -95,9 +95,9 @@ public class test1 extends Applet{
 					
 					
 					//On peut utiliser le souris pour tourner le cube
-					//Mais, au début, on ne peut pas les tourner. Car, on n'utilise pas encore la fonction setSchedulingBounds
+					//Mais, au dï¿½but, on ne peut pas les tourner. Car, on n'utilise pas encore la fonction setSchedulingBounds
 					MouseRotate behavior = new MouseRotate();					
-				    behavior.setTransformGroup(objRotate[notab_color_cube]);
+					behavior.setTransformGroup(objRotate[notab_color_cube]);
 				    objRotate[notab_color_cube].addChild(behavior);
 				  
 				    //
@@ -138,16 +138,19 @@ public class test1 extends Applet{
 		panelEast.setSize(100, 100);
 		panelEast.setLayout(new GridLayout(8,1));
 		
-		String nom[] = new String[numberLineCube*numberLineCube*numberLineCube];
+//		String nom[] = new String[numberLineCube*numberLineCube*numberLineCube];
+//		
+//		for(int iBoucle=0; iBoucle<numberLineCube*numberLineCube*numberLineCube; iBoucle++)
+//		{
+//			nom[iBoucle] = Integer.toString(iBoucle+1);
+//		}
 		
-		for(int iBoucle=0; iBoucle<numberLineCube*numberLineCube*numberLineCube; iBoucle++)
-		{
-			nom[iBoucle] = Integer.toString(iBoucle+1);
-		}
+		Info infoNom = new Info();
+		String [] nom = infoNom.getNomTab(); 
 		
 		//Creer un JComboBox pour que les utilisateurs puissent choisir un cube selon l'id
-		final JComboBox cb_choix_cube = new JComboBox(nom);
-		cb_choix_cube.insertItemAt("Sélectionner numéro de cube", 0);
+		final JComboBox<String> cb_choix_cube = new JComboBox<String>(nom);
+		cb_choix_cube.insertItemAt("SÃ©lectionner numÃ©ro de cube", 0);
 		cb_choix_cube.setSelectedIndex(0);
 		panelEast.add(cb_choix_cube);
 		
@@ -173,7 +176,7 @@ public class test1 extends Applet{
 		
 		/** Panel bas **/
 		
-		//Creer un panel pour afficher les info correspondant à un cube
+		//Creer un panel pour afficher les info correspondant ï¿½ un cube
 		JPanel panelSouth = new JPanel();
 		panelSouth.setLayout(new GridLayout(2,3));
 		
@@ -217,23 +220,28 @@ public class test1 extends Applet{
 		u.addBranchGraph(scene);
 		
 		
-		/** Evènements JComboBox **/
+		/** Evï¿½nements JComboBox **/
 		
-		// Sélection d'un cube dans la liste
+		// Sï¿½lection d'un cube dans la liste
 		cb_choix_cube.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e)
 			{
 				//Si le choix de cube change
 				if(e.getStateChange() == ItemEvent.SELECTED)
 				{
-					// Retirer de la liste l'item par défaut
+					// Retirer de la liste l'item par dï¿½faut
 					cb_choix_cube.removeItemAt(0);
 					
-					// Marche car le nom affiché est un numéro
-					int IdNom = Integer.parseInt(e.getItem().toString());
+					// Marche car le nom affichï¿½ est un numï¿½ro
+//					int IdNom = Integer.parseInt(e.getItem().toString());
+					
+//					int IdNom = cb_choix_cube.getSelectedIndex();
+					String nom = cb_choix_cube.getSelectedItem().toString();
 					
 					//Afficher les infos correspondant au cube
-					Info info = tab_color_cube[IdNom-1].getInfo();
+//					Info info = tab_color_cube[IdNom-1].getInfo();
+					Info info = new Info(nom);
+					int IdNom = info.getIdStructure();
 					textIdStructure.setText(Integer.toString(info.getIdStructure()));
 					textNom.setText(info.getNom());
 					textDescription.setText(info.getDescription());
@@ -281,7 +289,7 @@ public class test1 extends Applet{
 						first_cube = false;
 					}
 					else
-					{ // Si ce n'est pas la première fois qu'un cube est sélectionné
+					{ // Si ce n'est pas la premiï¿½re fois qu'un cube est sï¿½lectionnï¿½
 						v3f = new Vector3f(0.25f*Xpre, 0.25f*Ypre, 0.25f*Zpre);
 						rotate.setTranslation(v3f);
 						objRotate[NomPre-1].setTransform(rotate);
@@ -320,7 +328,7 @@ public class test1 extends Applet{
 							}
 						}
 						
-						//Configurer le nouveau cube à faire tourner
+						//Configurer le nouveau cube ï¿½ faire tourner
 						mr =  (MouseRotate)objRotate[IdNom-1].getChild(0);
 						mr.setSchedulingBounds(bounds);
 					}
@@ -332,7 +340,7 @@ public class test1 extends Applet{
 		btn_x.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				// Si ce un cube a déjà été choisi
+				// Si ce un cube a dÃ©jÃ  Ã©tÃ© choisi
 				if(NomPre != 0)
 				{
 					float coordonnee[] = tab_color_cube[NomPre-1].getXYZ();
