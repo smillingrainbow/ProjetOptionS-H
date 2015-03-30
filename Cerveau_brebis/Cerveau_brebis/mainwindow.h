@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "childview.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -17,6 +19,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    ChildView * childView;
 };
 
 #endif // MAINWINDOW_H

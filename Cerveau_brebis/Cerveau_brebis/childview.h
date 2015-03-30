@@ -5,6 +5,8 @@
 #include <QColumnView>
 #include <QLayout>
 #include <QTextEdit>
+#include <QStandardItem>
+#include <QStandardItemModel>
 
 class ChildView : public QWidget
 {
@@ -12,7 +14,13 @@ class ChildView : public QWidget
 
 public:
     explicit ChildView(QWidget *parent = 0);
-    ~ChildView();
+    ~ChildView(){}
+
+signals :
+        void clicked(QModelIndex index);
+
+public slots:
+        void updateQColumnView(QModelIndex index);
 
 private:
     /**
@@ -23,6 +31,13 @@ private:
      * @brief Description de l'objet sélectionné
      */
     QTextEdit *descriptionText;
+    QStandardItemModel *model;
+    QStandardItem *item1;
+    QStandardItem *item2;
+
+    void initializeFirstColumn();
+
+
 };
 
 #endif // CHILDVIEW_H

@@ -6,6 +6,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    childView = new ChildView();
+
+    this->setCentralWidget(childView);
 }
 
 MainWindow::~MainWindow()
