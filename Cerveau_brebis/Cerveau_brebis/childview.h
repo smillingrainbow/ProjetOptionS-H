@@ -7,6 +7,11 @@
 #include <QTextEdit>
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include <iostream>
+#include <QList>
+#include <QString>
+
+#include "database.h"
 
 class ChildView : public QWidget
 {
@@ -32,8 +37,8 @@ private:
      */
     QTextEdit *descriptionText;
     QStandardItemModel *model;
-    QStandardItem *item1;
-    QStandardItem *item2;
+//    QStandardItem *item1;
+//    QStandardItem *item2;
 
     void initializeFirstColumn();
 

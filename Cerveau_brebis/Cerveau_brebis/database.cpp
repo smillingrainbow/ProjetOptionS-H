@@ -3,11 +3,11 @@ using namespace std;
 
 bool Database::db_open_connection()
 {
-    db = QSqlDatabase::addDatabase("QSQLITE","");
+    db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
     db.setUserName("root");
     db.setPassword("root");
-    db.setDatabaseName("structurecerveaubrebis.sqli");
+    db.setDatabaseName("structurecerveaubrebis");
 
     if(db.open())
     {
@@ -35,12 +35,14 @@ QList<QList<QString> > Database::get_result_select(QString requete_sql)
 
     if(query.exec(requete_sql)){
         int nb_column = query.record().count();
-        while(query.next())
-        {
-            int count=0;
-            for(int i=0; i<nb_column;i++) // TODO : VERIFIER QUE L'INDICE COMMENCE A 0
-                result[count][i] = query.value(i).toString(); // remplissage de la liste avec le résultat de la requête
-            count++;
+        int nb_ligne = query.size();
+        cout << "Nombre  de colonne : " << nb_column << endl;
+        while(query.next()){
+            QList<QString> list;
+            for(int colonne=0; colonne < nb_column; colonne++){
+                list.append(query.value(colonne).toString());
+            }
+            result.append(list);
         }
         cout << "Fin de la récupération du résultat de la requête." << endl;
     }else{ // Erreur

@@ -5,9 +5,6 @@
 
 #include "childview.h"
 
-namespace Ui {
-class MainWindow;
-}
 
 class MainWindow : public QMainWindow
 {
@@ -18,7 +15,6 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
     ChildView * childView;
 };
 
