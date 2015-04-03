@@ -22,9 +22,17 @@ public:
     ~ChildView(){}
 
 signals :
+        /**
+         * @brief Envoi un signal lors qu'un élément est sélectionné
+         * @param index Elément sélectionné
+         */
         void clicked(QModelIndex index);
 
 public slots:
+        /**
+         * @brief Affiche la description de l'élément sélectionné.
+         * @param index Pointeur sur l'élément sélectionné
+         */
         void updateQColumnView(QModelIndex index);
 
 private:
@@ -37,11 +45,25 @@ private:
      */
     QTextEdit *descriptionText;
     QStandardItemModel *model;
-//    QStandardItem *item1;
-//    QStandardItem *item2;
 
-    void initializeFirstColumn();
-
+    /**
+     * @brief Cette méhtode permet de remplir le QColumnView.
+     *
+     * Le widget QColulnView est initialisé avec les données de la base de données.
+     * Un clic sur un élément ouvrira une nouvelle colonne avec les élements inclus
+     * dans celui sélectionné.
+     */
+    void initializeColumnView();
+    /**
+     * @brief Parcours des enfants de l'élement avec l'id idParent
+     * @param idParent Id de l'élement à parcourir
+     * @param itemParent QStandardItem dans lequel ajouté les élements des enfants
+     *
+     * Cette fonction récursive parcours tous les enfants de l'élement
+     * avec l'id_structure égale à idParent.
+     *
+     */
+    void parcoursDatabase(QString idParent, QStandardItem * itemParent);
 
 };
 
