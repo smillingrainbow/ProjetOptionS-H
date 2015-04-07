@@ -37,9 +37,6 @@ void ChildView::initializeColumnView(){
 
             model->appendRow(item);
         }
-
-//        descriptionText->setText(result.at(0).at(1));
-
     }
     childColumnView->setModel(model);
 
