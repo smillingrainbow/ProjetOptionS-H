@@ -1,5 +1,4 @@
 #include "childview.h"
-#include "ui_childview.h"
 using namespace std;
 
 ChildView::ChildView(QWidget *parent) :
