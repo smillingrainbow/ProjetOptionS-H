@@ -3,30 +3,34 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    QWidget *centralWidget = new QWidget(parent);
+    //QWidget *centralWidget = new QWidget(parent);
 
     childView = new ChildView();
 
-    createToolbar(centralWidget);
     createActions();
-
+    createToolbar();
 
     this->setCentralWidget(childView);
 
 }
 
-void MainWindow::createToolbar(QWidget* centralWidget){
+void MainWindow::createToolbar(){
 
-    menubar = new QMenuBar(centralWidget);
+//    menubar = new QMenuBar(centralWidget);
 
-    menu = new QMenu("PARAMETRES");
-    menu->addMenu(new QMenu("Base de données"));
+//    menu = new QMenu("PARAMETRES");
+//    menu->addMenu(new QMenu("Base de données"));
 
-    menubar->addMenu(menu);
+//    menubar->addMenu(menu);
+
+
+    menu = menuBar()->addMenu("Parametres");
+    menu->addAction(changeParamDB);
 }
 
 void MainWindow::createActions(){
-
+    changeParamDB = new QAction("Base de données", this);
+    connect(changeParamDB, SIGNAL(triggered()), this, SLOT(changeDBParam()));
 }
 
 
@@ -34,3 +38,12 @@ void MainWindow::createActions(){
 MainWindow::~MainWindow()
 {
 }
+
+void MainWindow::changeDBParam()
+{
+    Dialog* dialog = new Dialog();
+    connect(dialog, SIGNAL(info(QString,QString)), childView, SLOT(receiveNewParam(QString,QString)));
+    dialog->show();
+}
+
+

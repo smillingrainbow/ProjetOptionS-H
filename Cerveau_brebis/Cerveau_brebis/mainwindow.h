@@ -4,8 +4,10 @@
 #include <QMainWindow>
 #include <QToolButton>
 #include <QMenuBar>
+#include <QAction>
 
 #include "childview.h"
+#include "dialog.h"
 
 
 class MainWindow : public QMainWindow
@@ -15,19 +17,21 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    /**
-     * @brief Bouton "Paramètres" du menu
-     */
-    QMenu* menu;
-    /**
-     * @brief Barre de menu
-     */
-    QMenuBar* menubar;
+
+private slots:
+    void changeDBParam();
 
 private:
     ChildView * childView;
     void createActions();
-    void createToolbar(QWidget* centralWidget);
+    void createToolbar();
+
+
+    /**
+     * @brief Bouton "Paramètres" du menu
+     */
+    QMenu* menu;
+    QAction* changeParamDB;
 
 };
 

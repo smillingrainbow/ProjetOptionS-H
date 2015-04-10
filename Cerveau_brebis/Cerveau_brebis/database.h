@@ -8,6 +8,8 @@
 #include <QtSql/QSqlError>
 #include <QDebug>
 #include <QtSql/QSqlRecord>
+#include <QMessageBox>
+#include <iostream>
 
 class Database
 {
@@ -24,7 +26,7 @@ public:
      * @brief db_connection
      * @return True si la connexion est bien effectuée, false sinon
      */
-    bool db_open_connection();
+    bool db_open_connection(QString &name, QString &password);
     /**
      * @brief db_close_connection
      * @return True si la connexion est bien fermée, false sinon

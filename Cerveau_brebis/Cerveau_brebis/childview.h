@@ -37,6 +37,12 @@ public slots:
          * @param index Pointeur sur l'élément sélectionné
          */
         void updateQColumnView(QModelIndex index);
+        /**
+         * @brief Réception des nouveaux identifiants pour la base de données
+         * @param name Nom de l'utilisateur
+         * @param password Mot de passe
+         */
+        void receiveNewParam(QString name, QString password);
 
 private:
     /**
@@ -68,6 +74,14 @@ private:
      */
     void parcoursDatabase(QString idParent, QStandardItem * itemParent);
 
+    /**
+     * @brief Nom de l'utilisateur pour la base de données
+     */
+    QString userName;
+    /**
+     * @brief Mot de passe de l'utilisateur pour la base de données
+     */
+    QString userPassword;
 
 };
 
