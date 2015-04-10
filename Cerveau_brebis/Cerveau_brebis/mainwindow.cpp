@@ -8,22 +8,13 @@ MainWindow::MainWindow(QWidget *parent) :
     childView = new ChildView();
 
     createActions();
-    createToolbar();
+    createMenubar();
 
     this->setCentralWidget(childView);
 
 }
 
-void MainWindow::createToolbar(){
-
-//    menubar = new QMenuBar(centralWidget);
-
-//    menu = new QMenu("PARAMETRES");
-//    menu->addMenu(new QMenu("Base de données"));
-
-//    menubar->addMenu(menu);
-
-
+void MainWindow::createMenubar(){
     menu = menuBar()->addMenu("Parametres");
     menu->addAction(changeParamDB);
 }

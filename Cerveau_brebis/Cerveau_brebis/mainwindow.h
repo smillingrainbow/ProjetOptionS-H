@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QToolButton>
 #include <QMenuBar>
 #include <QAction>
 
@@ -19,12 +18,23 @@ public:
     ~MainWindow();
 
 private slots:
+    /**
+     * @brief Changement des logs de la bdd
+     * Appelé lors du clic dans le menu "Base de donées"
+     * Ouvre la fenetre d'identification
+     */
     void changeDBParam();
 
 private:
     ChildView * childView;
+    /**
+     * @brief Gestion des actions des boutons du menu
+     */
     void createActions();
-    void createToolbar();
+    /**
+     * @brief Création de la barre de menu
+     */
+    void createMenubar();
 
 
     /**
