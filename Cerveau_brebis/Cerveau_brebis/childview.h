@@ -10,6 +10,8 @@
 #include <iostream>
 #include <QList>
 #include <QString>
+#include <QMenuBar>
+#include <QMenu>
 
 #include "database.h"
 
@@ -20,6 +22,7 @@ class ChildView : public QWidget
 public:
     explicit ChildView(QWidget *parent = 0);
     ~ChildView(){}
+
 
 signals :
         /**
@@ -64,6 +67,7 @@ private:
      *
      */
     void parcoursDatabase(QString idParent, QStandardItem * itemParent);
+
 
 };
 

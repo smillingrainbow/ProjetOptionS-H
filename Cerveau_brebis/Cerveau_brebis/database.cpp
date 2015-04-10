@@ -6,7 +6,7 @@ bool Database::db_open_connection()
     db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
     db.setUserName("root");
-    db.setPassword("root");
+    db.setPassword("");
     db.setDatabaseName("structurecerveaubrebis");
 
     if(db.open())
@@ -52,9 +52,3 @@ QList<QList<QString> > Database::get_result_select(QString requete_sql)
 
     return result;
 }
-
-
-
-
-
-

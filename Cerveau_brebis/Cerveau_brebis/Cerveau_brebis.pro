@@ -22,3 +22,5 @@ HEADERS  += mainwindow.h \
     childview.h \
     database.h
 
+FORMS +=
+

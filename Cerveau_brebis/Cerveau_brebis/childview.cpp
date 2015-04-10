@@ -77,3 +77,4 @@ void ChildView::updateQColumnView(QModelIndex index)
     }
 }
 
+
