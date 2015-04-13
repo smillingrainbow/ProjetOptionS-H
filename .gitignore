@@ -1,8 +1,9 @@
+
 *.class
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
+*.pro.user
 # Package Files #
 *.war
 *.ear
@@ -12,4 +13,5 @@ hs_err_pid*
 
 Cerveau_brebis/build-Cerveau_brebis-Desktop-Debug/
 Cerveau_brebis/build-Cerveau_brebis-Desktop-Release/
-
+build-cube-Desktop-Debug/
+build-cube-Desktop-Release/

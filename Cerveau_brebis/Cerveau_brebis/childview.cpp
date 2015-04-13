@@ -15,6 +15,9 @@ ChildView::ChildView(QWidget *parent) :
 
     connect(childColumnView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateQColumnView(QModelIndex)));
 
+//    userName = new QString();
+//    userPassword = new QString();
+
     this->setLayout(vbox);
 }
 
@@ -23,11 +26,11 @@ void ChildView::initializeColumnView(){
 
     Database db;
     QString requete = "SELECT id_structure, nom FROM structure WHERE id_parent IS NULL";
-    if(db.db_open_connection()){
+    if(db.db_open_connection(userName, userPassword)){
         QList<QList<QString> > result = db.get_result_select(requete);
         db.db_close_connection();
-        cout << result.size() << endl;
-        cout << result[0].size() << endl;
+//        cout << result.size() << endl;
+//        cout << result[0].size() << endl;
         for(int i=0; i<result.size(); i++){
             QStandardItem *item = new QStandardItem(result.at(i).at(1));
             QString idParent = result.at(i).at(0);
@@ -36,9 +39,6 @@ void ChildView::initializeColumnView(){
 
             model->appendRow(item);
         }
-
-//        descriptionText->setText(result.at(0).at(1));
-
     }
     childColumnView->setModel(model);
 
@@ -49,7 +49,7 @@ void ChildView::parcoursDatabase(QString idParent, QStandardItem *itemParent)
     QString requete = "SELECT id_structure, nom FROM structure WHERE id_parent='" + idParent + "'";
     Database db;
     QList<QList<QString> > result;
-    if(db.db_open_connection())
+    if(db.db_open_connection(userName, userPassword))
         result = db.get_result_select(requete);
     db.db_close_connection();
 
@@ -61,6 +61,18 @@ void ChildView::parcoursDatabase(QString idParent, QStandardItem *itemParent)
     }
 }
 
+void ChildView::receiveNewParam(QString name, QString password)
+{
+//    userName = new QString(name);
+//    userPassword = new QString(password);
+
+    userName = name;
+    userPassword = password;
+
+    qDebug() << "Childview ";
+    qDebug()<< "Name : " << name;
+    qDebug() << "Password : " << password;
+}
 
 
 void ChildView::updateQColumnView(QModelIndex index)
@@ -68,7 +80,7 @@ void ChildView::updateQColumnView(QModelIndex index)
     QStandardItem *item = model->itemFromIndex(index);
     QString requeteDesc = "SELECT id_structure, description FROM structure WHERE nom='"+item->text() + "'";
     Database db;
-    if(db.db_open_connection()){
+    if(db.db_open_connection(userName, userPassword)){
         QList<QList<QString> > resultDesc = db.get_result_select(requeteDesc);
         db.db_close_connection();
         if(resultDesc.size()>0){
@@ -76,4 +88,5 @@ void ChildView::updateQColumnView(QModelIndex index)
         }
     }
 }
+
 

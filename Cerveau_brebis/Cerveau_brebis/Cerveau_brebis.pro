@@ -16,9 +16,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     childview.cpp \
-    database.cpp
+    database.cpp \
+    dialog.cpp
 
 HEADERS  += mainwindow.h \
     childview.h \
-    database.h
+    database.h \
+    dialog.h
+
 
