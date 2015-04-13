@@ -61,28 +61,87 @@ class MainWidget : public QOpenGLWidget, protected QOpenGLFunctions
     Q_OBJECT
 
 public:
+    /**
+     * @brief MainWidget constructeur du MainWidget
+     * @param parent
+     */
     explicit MainWidget(QWidget *parent = 0);
     ~MainWidget();
 
 protected:
+    //override des Event du OpenGL
     void mousePressEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
     void timerEvent(QTimerEvent *e) Q_DECL_OVERRIDE;
+
+    /**
+      *@brief keyPressEvent ajouter des manipulations du OpenGL par clavier
+      */
     void keyPressEvent(QKeyEvent *e) Q_DECL_OVERRIDE;
 
+    /**
+      *@brief initializeGL init des composants de la fenêtre du OpenGL
+      */
     void initializeGL() Q_DECL_OVERRIDE;
+
+    /**
+      *@brief resizeGL init le point de vue des Scènes Scenes perspective composant:
+      * resize la taille de la fenêtre du OpenGL et initi des chiffres de la sènce de projection
+      *@param w width/largeur
+      *@param h height/longeur
+      */
     void resizeGL(int w, int h) Q_DECL_OVERRIDE;
+
+    /**
+      *@brief paintGL dessiner la fenêtre du OpenGL
+      * chaque fois il y a des events de mis à jour, cette fonction est appelée
+      */
     void paintGL() Q_DECL_OVERRIDE;
 
+    /**
+     * @brief initShaders
+     */
     void initShaders();
+
+    /**
+     * @brief initTextures init du textures
+     */
     void initTextures();
+
+    /**
+     * @brief initPositions init des coordonnées de la position du cube
+     */
     void initPositions();
+
+    /**
+     * @brief initInfoView init des fenêtres du InfoView
+     */
     void initInfoView();
 
+    /**
+     * @brief callCubeBelow appel la fenêtre d'information du cube en base
+     * et sorti le cube dans 3D
+     */
     void callCubeBelow();
+
+    /**
+     * @brief callCubeLeft appel la fenêtre d'information du cube à gauche
+     * et sorti le cube dans 3D
+     */
     void callCubeLeft();
+
+    /**
+     * @brief callCubeRight appel la fenêtre d'information du cube à droit
+     * et sorti le cube dans 3D
+     */
     void callCubeRight();
+
+    /**
+     * @brief showInfo affichage des info du cube
+     * @param cube le nom du cube:"below","left" "right"
+     */
     void showInfo(QString cube);
+
 private:
     QBasicTimer timer;
     QOpenGLShaderProgram program;
@@ -97,12 +156,26 @@ private:
     qreal angularSpeed;
     QQuaternion rotation;
 
+    /**
+     * @brief bool is the info window of cerveau is once opened
+     * IsCalledL(left),IsCalledR(right),IsCalledB(base)
+     */
     bool IsCalledL,IsCalledR,IsCalledB;
+    /**
+     * @brief pxL,pyL,pzL des coordonnées de la position du cerveau à gauche
+     */
     int pxL,pyL,pzL;
+    /**
+     * @brief pxR,pyR,pzR des coordonnées de la position du cerveau à droite
+     */
     int pxR,pyR,pzR;
+    /**
+     * @brief pxB,pyB,pzB des coordonnées de la position du cerveau en base
+     */
     int pxB,pyB,pzB;
 
-    //InfoView infoView;
+
+    //The 3 InfoView window
     InfoView *infoViewL,*infoViewR,*infoViewB;
 
 };

@@ -98,7 +98,7 @@ void MainWidget::timerEvent(QTimerEvent *)
     angularSpeed *= 0.99;
 
     // Stop rotation when speed goes below threshold
-    if (angularSpeed < 0.01) {
+    if (angularSpeed < 0.9) {//0.01
         angularSpeed = 0.0;
     } else {
         // Update rotation
@@ -115,8 +115,8 @@ void MainWidget::keyPressEvent(QKeyEvent *e)
         {
             //update screen
             case Qt::Key_Up:
-               initPositions();
-               paintGL();
+                initPositions();
+                paintGL();
             break;
             //call the cube below
             case Qt::Key_Down:
@@ -144,6 +144,7 @@ void MainWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
+    //set the backgrand black
     glClearColor(0, 0, 0, 1);
 
     initShaders();
@@ -202,6 +203,7 @@ void MainWidget::initTextures()
     // f.ex. texture coordinate (1.1, 1.2) is same as (0.1, 0.2)
     texture->setWrapMode(QOpenGLTexture::Repeat);
 }
+
 void MainWidget::initPositions()
 {
     IsCalledL=false,IsCalledR=false,IsCalledB=false;
@@ -222,9 +224,11 @@ void MainWidget::initInfoView()
 
     infoViewB=new InfoView();
     infoViewB->setWindowTitle("Brainstem");
+
 }
 void MainWidget::callCubeBelow()
 {
+    //set all the objets in the defaut position
     initPositions();
 
     pxB=0.0;pyB=-4.0;pzB=-12.0;
@@ -291,7 +295,7 @@ void MainWidget::resizeGL(int w, int h)
     // Calculate aspect ratio
     qreal aspect = qreal(w) / qreal(h ? h : 1);
 
-    // Set near plane to 1.0, far plane to 100.0, field of view 45 degrees
+    // Set near plane to 1.0, far plane to 100.0, field of view 60 degrees
     const qreal zNear = 1.0, zFar = 100.0, fov = 60.0;
 
     // Reset projection
