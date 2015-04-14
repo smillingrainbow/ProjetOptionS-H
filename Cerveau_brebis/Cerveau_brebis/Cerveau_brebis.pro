@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT	+= sql
+QT	+= widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,23 +15,22 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     childview.cpp \
     database.cpp \
     dialog.cpp \
     mainwidget.cpp \
-    geometryengine.cpp
+    geometryengine.cpp \
+    windowdb.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     childview.h \
     database.h \
     dialog.h \
     mainwidget.h \
-    geometryengine.h
+    geometryengine.h \
+    windowdb.h
 
 RESOURCES += \
-    shaders.qrc \
-    textures.qrc \
     shaders.qrc \
     textures.qrc
 

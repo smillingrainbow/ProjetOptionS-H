@@ -1,6 +1,6 @@
-#include "mainwindow.h"
+#include "windowdb.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+WindowDB::WindowDB(QWidget *parent) :
     QMainWindow(parent)
 {
     //QWidget *centralWidget = new QWidget(parent);
@@ -15,16 +15,16 @@ MainWindow::MainWindow(QWidget *parent) :
     isOpened = false;
 }
 
-void MainWindow::createMenubar(){
+void WindowDB::createMenubar(){
     menu = menuBar()->addMenu("Parametres");
     menu->addAction(changeParamDB);
 }
-QString MainWindow::getNameOfPartBrain() const
+QString WindowDB::getNameOfPartBrain() const
 {
     return nameOfPartBrain;
 }
 
-void MainWindow::setNameOfPartBrain(const QString &value)
+void WindowDB::setNameOfPartBrain(const QString &value)
 {
     qDebug() << "MainWindow : " << value;
     nameOfPartBrain = value;
@@ -32,36 +32,46 @@ void MainWindow::setNameOfPartBrain(const QString &value)
 }
 
 
-void MainWindow::createActions(){
+void WindowDB::createActions(){
     changeParamDB = new QAction("Base de données", this);
-    connect(changeParamDB, SIGNAL(triggered()), this, SLOT(changeDBParam()));
+    connect(changeParamDB, SIGNAL(triggered()), this, SLOT(changeDBParam1()));
 }
 
 
 
-MainWindow::~MainWindow()
+WindowDB::~WindowDB()
 {
 }
 
-void MainWindow::changeDBParam()
+void WindowDB::changeDBParam1()
 {
     Dialog* dialog = new Dialog();
     connect(dialog, SIGNAL(info(QString,QString)), childView, SLOT(receiveNewParam(QString,QString)));
     dialog->show();
 }
 
-bool MainWindow::getIsOpened(){
+void WindowDB::receiveNewParamWindow(QString name, QString password)
+{
+    childView->setUserName(name);
+    childView->setUserPassword(password);
+
+    connect(this, SIGNAL(changeParam()), childView, SLOT(receiveParam()));
+
+    emit changeParam();
+}
+
+bool WindowDB::getIsOpened(){
     return isOpened;
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
+void WindowDB::closeEvent(QCloseEvent *event)
 {
     event->accept(); // close window
     this->close();
     isOpened=false;
 }
 
-void MainWindow::showEvent( QShowEvent* event )
+void WindowDB::showEvent( QShowEvent* event )
 {
     QWidget::showEvent( event );
     isOpened=true;

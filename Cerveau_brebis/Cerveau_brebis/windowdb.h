@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef WINDOWDB_H
+#define WINDOWDb_H
 
 #include <QMainWindow>
 #include <QMenuBar>
@@ -10,25 +10,27 @@
 #include "dialog.h"
 
 
-class MainWindow : public QMainWindow
+class WindowDB : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit WindowDB(QWidget *parent = 0);
+    ~WindowDB();
     bool getIsOpened();
 
     QString getNameOfPartBrain() const;
     void setNameOfPartBrain(const QString &value);
-
+signals:
+    void changeParam();
 private slots:
     /**
      * @brief Changement des logs de la bdd
      * Appelé lors du clic dans le menu "Base de donées"
      * Ouvre la fenetre d'identification
      */
-    void changeDBParam();
+    void changeDBParam1();
+    void receiveNewParamWindow(QString name, QString password);
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -55,4 +57,4 @@ private:
     QString nameOfPartBrain;
 };
 
-#endif // MAINWINDOW_H
+#endif // WINDOWDB_H

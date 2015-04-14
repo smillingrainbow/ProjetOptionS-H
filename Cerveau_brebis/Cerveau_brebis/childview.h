@@ -27,6 +27,12 @@ public:
     QString getBrain() const;
     void setBrain(const QString &value);
 
+    QString getUserPassword() const;
+    void setUserPassword(const QString &value);
+
+    QString getUserName() const;
+    void setUserName(const QString &value);
+
 signals :
     /**
          * @brief Envoi un signal lors qu'un élément est sélectionné
@@ -46,6 +52,7 @@ public slots:
          * @param password Mot de passe
          */
         void receiveNewParam(QString name, QString password);
+        void receiveParam();
 
 private:
     /**

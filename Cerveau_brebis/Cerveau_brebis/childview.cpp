@@ -10,7 +10,8 @@ ChildView::ChildView(QWidget *parent) :
 
     vbox->addWidget(childColumnView);
     vbox->addWidget(descriptionText);
-    if(brain!= NULL){
+    Database db;
+    if(brain!= NULL && db.db_open_connection(userName, userPassword)){
         initializeColumnView();
         connect(childColumnView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateQColumnView(QModelIndex)));
     }
@@ -63,6 +64,26 @@ void ChildView::parcoursDatabase(QString idParent, QStandardItem *itemParent)
         parcoursDatabase(idChild, itemChild);
     }
 }
+QString ChildView::getUserName() const
+{
+    return userName;
+}
+
+void ChildView::setUserName(const QString &value)
+{
+    userName = value;
+}
+
+QString ChildView::getUserPassword() const
+{
+    return userPassword;
+}
+
+void ChildView::setUserPassword(const QString &value)
+{
+    userPassword = value;
+}
+
 QString ChildView::getBrain() const
 {
     return brain;
@@ -87,6 +108,12 @@ void ChildView::receiveNewParam(QString name, QString password)
     qDebug() << "Childview ";
     qDebug()<< "Name : " << name;
     qDebug() << "Password : " << password;
+    initializeColumnView();
+}
+
+void ChildView::receiveParam()
+{
+    initializeColumnView();
 }
 
 

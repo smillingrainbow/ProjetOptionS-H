@@ -111,6 +111,7 @@ void MainWidget::timerEvent(QTimerEvent *)
 
 void MainWidget::keyPressEvent(QKeyEvent *e)
 {
+    qDebug() << "Touche";
     switch(e->key())
         {
             //update screen
@@ -216,17 +217,28 @@ void MainWidget::initPositions()
 void MainWidget::initInfoView()
 {
 
-    infoViewL=new MainWindow();
-    infoViewL->setWindowTitle("Left brain");
+    infoViewL=new WindowDB();
+    infoViewL->setWindowTitle("HindBrain");
     infoViewL->setNameOfPartBrain("HindBrain");
 
-    infoViewR=new MainWindow();
-    infoViewR->setWindowTitle("Right brain");
+    infoViewR=new WindowDB();
+    infoViewR->setWindowTitle("Mid Brain");
     infoViewR->setNameOfPartBrain("MidBrain");
 
-    infoViewB=new MainWindow();
-    infoViewB->setWindowTitle("Brainstem");
+    infoViewB=new WindowDB();
+    infoViewB->setWindowTitle("Brain");
     infoViewB->setNameOfPartBrain("Brain");
+
+    Database db;
+    QString name = "";
+    QString password = "";
+    if(!db.db_open_connection(name, password)){
+        Dialog* dialogDB = new Dialog();
+        connect(dialogDB, SIGNAL(info(QString,QString)), infoViewB, SLOT(receiveNewParamWindow(QString,QString)));
+        connect(dialogDB, SIGNAL(info(QString,QString)), infoViewL, SLOT(receiveNewParamWindow(QString,QString)));
+        connect(dialogDB, SIGNAL(info(QString,QString)), infoViewR, SLOT(receiveNewParamWindow(QString,QString)));
+        dialogDB->show();
+    }
 
 }
 void MainWidget::callCubeBelow()
@@ -263,6 +275,7 @@ void MainWidget::callCubeRight()
 void MainWidget::showInfo(QString cube)
 {
 
+//    initInfoView();
    if(cube=="left"){
        if(infoViewL->getIsOpened())
        {

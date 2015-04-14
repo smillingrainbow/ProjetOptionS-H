@@ -6,9 +6,9 @@ bool Database::db_open_connection(QString& name, QString& password)
     db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
 
-    qDebug() << "Database " ;
-    qDebug()<< "Name : " << name ;
-    qDebug() << "Password : " << password;
+//    qDebug() << "Database " ;
+//    qDebug()<< "Name : " << name ;
+//    qDebug() << "Password : " << password;
 
 
     if(name == NULL){
@@ -18,7 +18,7 @@ bool Database::db_open_connection(QString& name, QString& password)
         db.setUserName(name);
     }
     if(password == NULL){
-        db.setPassword("root");
+        db.setPassword("");
     }
     else{
         db.setPassword(password);
@@ -32,9 +32,9 @@ bool Database::db_open_connection(QString& name, QString& password)
     }
     else
     {
-        QMessageBox msgBox;
-        msgBox.setText("La connexion à la base de données a échouée");
-        msgBox.exec();
+//        QMessageBox msgBox;
+//        msgBox.setText("La connexion à la base de données a échouée");
+//        msgBox.exec();
         cout << "La connexion à la base de données a échoué." << endl;
         return false;
     }
@@ -65,9 +65,9 @@ QList<QList<QString> > Database::get_result_select(QString requete_sql)
         }
 //        cout << "Fin de la récupération du résultat de la requête." << endl;
     }else{ // Erreur
-        QMessageBox msgBox;
-        msgBox.setText("Erreur lors de l'exécution de la requête.");
-        msgBox.exec();
+//        QMessageBox msgBox;
+//        msgBox.setText("Erreur lors de l'exécution de la requête.");
+//        msgBox.exec();
         cout << "Erreur lors de l'exécution de la requête." << endl;
         qDebug() << query.lastError();
     }

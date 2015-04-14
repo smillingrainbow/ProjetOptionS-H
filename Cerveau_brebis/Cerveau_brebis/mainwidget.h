@@ -41,7 +41,9 @@
 #define MAINWIDGET_H
 
 #include "geometryengine.h"
-#include "mainwindow.h"
+#include "windowdb.h"
+#include "dialog.h"
+#include "database.h"
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
@@ -52,6 +54,8 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLTexture>
 #include <QString>
+#include <QMenuBar>
+#include <QAction>
 
 class GeometryEngine;
 
@@ -67,8 +71,11 @@ public:
     explicit MainWidget(QWidget *parent = 0);
     ~MainWidget();
 
-protected:
-    //override des Event du OpenGL
+private slots:
+
+
+private:
+    //override des Event de OpenGL
     void mousePressEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
     void timerEvent(QTimerEvent *e) Q_DECL_OVERRIDE;
@@ -141,7 +148,6 @@ protected:
      */
     void showInfo(QString cube);
 
-private:
     QBasicTimer timer;
     QOpenGLShaderProgram program;
     GeometryEngine *geometries;
@@ -175,7 +181,8 @@ private:
 
 
     //The 3 InfoView window
-    MainWindow *infoViewL,*infoViewR,*infoViewB;
+    WindowDB *infoViewL,*infoViewR,*infoViewB;
+
 
 };
 

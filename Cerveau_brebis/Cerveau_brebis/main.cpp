@@ -1,11 +1,9 @@
-#include "mainwindow.h"
 #include <QApplication>
 #include <iostream>
 
 #ifndef QT_NO_OPENGL
 #include "mainwidget.h"
 #endif
-
 
 using namespace std;
 
