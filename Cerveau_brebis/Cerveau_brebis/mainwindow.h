@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QAction>
+#include <QCloseEvent>
 
 #include "childview.h"
 #include "dialog.h"
@@ -16,6 +17,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    bool getIsOpened();
+
+    QString getNameOfPartBrain() const;
+    void setNameOfPartBrain(const QString &value);
 
 private slots:
     /**
@@ -24,6 +29,10 @@ private slots:
      * Ouvre la fenetre d'identification
      */
     void changeDBParam();
+
+protected:
+    void closeEvent(QCloseEvent *event);
+    void showEvent(QShowEvent* event );
 
 private:
     ChildView * childView;
@@ -42,7 +51,8 @@ private:
      */
     QMenu* menu;
     QAction* changeParamDB;
-
+    bool isOpened;
+    QString nameOfPartBrain;
 };
 
 #endif // MAINWINDOW_H

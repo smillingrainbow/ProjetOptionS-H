@@ -10,10 +10,12 @@ ChildView::ChildView(QWidget *parent) :
 
     vbox->addWidget(childColumnView);
     vbox->addWidget(descriptionText);
+    if(brain!= NULL){
+        initializeColumnView();
+        connect(childColumnView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateQColumnView(QModelIndex)));
+    }
 
-    initializeColumnView();
 
-    connect(childColumnView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateQColumnView(QModelIndex)));
 
 //    userName = new QString();
 //    userPassword = new QString();
@@ -25,15 +27,16 @@ void ChildView::initializeColumnView(){
     model = new QStandardItemModel;
 
     Database db;
-    QString requete = "SELECT id_structure, nom FROM structure WHERE id_parent IS NULL";
+    qDebug()<< brain ;
+    QString requete = "SELECT id_structure FROM structure WHERE nom='"+brain + "'";
     if(db.db_open_connection(userName, userPassword)){
         QList<QList<QString> > result = db.get_result_select(requete);
         db.db_close_connection();
 //        cout << result.size() << endl;
 //        cout << result[0].size() << endl;
-        for(int i=0; i<result.size(); i++){
-            QStandardItem *item = new QStandardItem(result.at(i).at(1));
-            QString idParent = result.at(i).at(0);
+        if(result.size() > 0){
+            QStandardItem *item = new QStandardItem(brain);
+            QString idParent = result.at(0).at(0);
 
             parcoursDatabase(idParent, item);
 
@@ -60,11 +63,23 @@ void ChildView::parcoursDatabase(QString idParent, QStandardItem *itemParent)
         parcoursDatabase(idChild, itemChild);
     }
 }
+QString ChildView::getBrain() const
+{
+    return brain;
+}
+
+void ChildView::setBrain(const QString &value)
+{
+    brain = value;
+    initializeColumnView();
+    connect(childColumnView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateQColumnView(QModelIndex)));
+}
+
 
 void ChildView::receiveNewParam(QString name, QString password)
 {
-//    userName = new QString(name);
-//    userPassword = new QString(password);
+    //    userName = new QString(name);
+    //    userPassword = new QString(password);
 
     userName = name;
     userPassword = password;

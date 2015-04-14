@@ -24,8 +24,11 @@ public:
     ~ChildView(){}
 
 
+    QString getBrain() const;
+    void setBrain(const QString &value);
+
 signals :
-        /**
+    /**
          * @brief Envoi un signal lors qu'un élément est sélectionné
          * @param index Elément sélectionné
          */
@@ -82,7 +85,7 @@ private:
      * @brief Mot de passe de l'utilisateur pour la base de données
      */
     QString userPassword;
-
+    QString brain;
 };
 
 #endif // CHILDVIEW_H

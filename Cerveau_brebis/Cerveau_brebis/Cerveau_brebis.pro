@@ -17,11 +17,26 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     childview.cpp \
     database.cpp \
-    dialog.cpp
+    dialog.cpp \
+    mainwidget.cpp \
+    geometryengine.cpp
 
 HEADERS  += mainwindow.h \
     childview.h \
     database.h \
-    dialog.h
+    dialog.h \
+    mainwidget.h \
+    geometryengine.h
+
+RESOURCES += \
+    shaders.qrc \
+    textures.qrc \
+    shaders.qrc \
+    textures.qrc
+
+# install
+target.path = $$[QT_INSTALL_EXAMPLES]/opengl/cube
+INSTALLS += target
+
 
 
