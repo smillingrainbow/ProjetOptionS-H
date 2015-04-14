@@ -18,7 +18,7 @@ bool Database::db_open_connection(QString& name, QString& password)
         db.setUserName(name);
     }
     if(password == NULL){
-        db.setPassword("");
+        db.setPassword("root");
     }
     else{
         db.setPassword(password);
