@@ -24,9 +24,12 @@ public:
     QList<QList<QString> > get_result_select(QString requete_sql);
     /**
      * @brief db_connection
+     * @param nom utilisateur de la base de données
+     * @param mot de passe de la base de données
+     * @param indique si les identifiants sont différents de ceux par défaut
      * @return True si la connexion est bien effectuée, false sinon
      */
-    bool db_open_connection(QString &name, QString &password);
+    bool db_open_connection(QString &name, QString &password, bool newLogin);
     /**
      * @brief db_close_connection
      * @return True si la connexion est bien fermée, false sinon

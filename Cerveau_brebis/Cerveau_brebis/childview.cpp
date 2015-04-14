@@ -10,12 +10,12 @@ ChildView::ChildView(QWidget *parent) :
 
     vbox->addWidget(childColumnView);
     vbox->addWidget(descriptionText);
+    newLogin = false;
     Database db;
-    if(brain!= NULL && db.db_open_connection(userName, userPassword)){
+    if(brain!= NULL && db.db_open_connection(userName, userPassword, newLogin)){
         initializeColumnView();
         connect(childColumnView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateQColumnView(QModelIndex)));
     }
-
 
 
 //    userName = new QString();
@@ -30,7 +30,7 @@ void ChildView::initializeColumnView(){
     Database db;
     qDebug()<< brain ;
     QString requete = "SELECT id_structure FROM structure WHERE nom='"+brain + "'";
-    if(db.db_open_connection(userName, userPassword)){
+    if(db.db_open_connection(userName, userPassword, newLogin)){
         QList<QList<QString> > result = db.get_result_select(requete);
         db.db_close_connection();
 //        cout << result.size() << endl;
@@ -53,7 +53,7 @@ void ChildView::parcoursDatabase(QString idParent, QStandardItem *itemParent)
     QString requete = "SELECT id_structure, nom FROM structure WHERE id_parent='" + idParent + "'";
     Database db;
     QList<QList<QString> > result;
-    if(db.db_open_connection(userName, userPassword))
+    if(db.db_open_connection(userName, userPassword, newLogin))
         result = db.get_result_select(requete);
     db.db_close_connection();
 
@@ -101,6 +101,7 @@ void ChildView::receiveNewParam(QString name, QString password)
 {
     //    userName = new QString(name);
     //    userPassword = new QString(password);
+    newLogin = true;
 
     userName = name;
     userPassword = password;
@@ -122,7 +123,7 @@ void ChildView::updateQColumnView(QModelIndex index)
     QStandardItem *item = model->itemFromIndex(index);
     QString requeteDesc = "SELECT id_structure, description FROM structure WHERE nom='"+item->text() + "'";
     Database db;
-    if(db.db_open_connection(userName, userPassword)){
+    if(db.db_open_connection(userName, userPassword, newLogin)){
         QList<QList<QString> > resultDesc = db.get_result_select(requeteDesc);
         db.db_close_connection();
         if(resultDesc.size()>0){

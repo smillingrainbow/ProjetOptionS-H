@@ -232,7 +232,7 @@ void MainWidget::initInfoView()
     Database db;
     QString name = "";
     QString password = "";
-    if(!db.db_open_connection(name, password)){
+    if(!db.db_open_connection(name, password, false)){
         Dialog* dialogDB = new Dialog();
         connect(dialogDB, SIGNAL(info(QString,QString)), infoViewB, SLOT(receiveNewParamWindow(QString,QString)));
         connect(dialogDB, SIGNAL(info(QString,QString)), infoViewL, SLOT(receiveNewParamWindow(QString,QString)));

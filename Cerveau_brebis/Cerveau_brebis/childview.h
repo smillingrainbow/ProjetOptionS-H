@@ -92,7 +92,14 @@ private:
      * @brief Mot de passe de l'utilisateur pour la base de données
      */
     QString userPassword;
+    /**
+     * @brief Nom de la partie sélectionné par l'utilisateur
+     */
     QString brain;
+    /**
+     * @brief Indique si les identifiants ont changé
+     */
+    bool newLogin;
 };
 
 #endif // CHILDVIEW_H

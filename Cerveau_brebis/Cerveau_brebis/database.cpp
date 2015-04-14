@@ -1,7 +1,7 @@
 #include "database.h"
 using namespace std;
 
-bool Database::db_open_connection(QString& name, QString& password)
+bool Database::db_open_connection(QString& name, QString& password, bool newLogin)
 {
     db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
@@ -10,19 +10,16 @@ bool Database::db_open_connection(QString& name, QString& password)
 //    qDebug()<< "Name : " << name ;
 //    qDebug() << "Password : " << password;
 
-
-    if(name == NULL){
-        db.setUserName("root");
-    }
-    else{
+    // si les identifiants ont été modifiés
+    if(newLogin){
         db.setUserName(name);
-    }
-    if(password == NULL){
+        db.setPassword(password);
+    } // sinon identifiants par défaut
+    else{
+        db.setUserName("root");
         db.setPassword("root");
     }
-    else{
-        db.setPassword(password);
-    }
+
     db.setDatabaseName("structurecerveaubrebis");
 
     if(db.open())
