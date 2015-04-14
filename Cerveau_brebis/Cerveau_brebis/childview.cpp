@@ -114,6 +114,7 @@ void ChildView::receiveNewParam(QString name, QString password)
 
 void ChildView::receiveParam()
 {
+    newLogin=true;
     initializeColumnView();
 }
 
